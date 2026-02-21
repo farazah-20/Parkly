@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    @apply bg-white text-gray-900;
+  }
+  /* Improved focus ring */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand-500;
+  }
+  /* Better date input appearance */
+  input[type="datetime-local"] {
+    color-scheme: light;
+  }
+}
+
+@layer utilities {
+  /* Smooth gradient text utility */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+  }
+}

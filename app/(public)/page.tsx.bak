@@ -1,0 +1,73 @@
+import { createClient } from '@/lib/supabase/server'
+import { SearchBar }    from '@/components/public/SearchBar'
+import { ShieldCheck, Clock, Star, Truck } from 'lucide-react'
+
+export default async function HomePage() {
+  const supabase = await createClient()
+  const { data: airports } = await supabase
+    .from('airports')
+    .select('*')
+    .order('city')
+
+  return (
+    <>
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-brand-700 to-brand-900 py-24 text-white">
+        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+          <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+            Valet-Parking am Flughafen –<br />
+            <span className="text-brand-200">stressfrei & sicher</span>
+          </h1>
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-brand-100">
+            Vergleichen Sie Parkplatz-Anbieter, buchen Sie online und genießen Sie einen
+            komfortablen Shuttle- oder Valet-Service.
+          </p>
+
+          {/* Search widget */}
+          <div className="mt-10">
+            <SearchBar airports={airports ?? []} />
+          </div>
+        </div>
+      </section>
+
+      {/* USPs */}
+      <section id="how-it-works" className="py-20">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-center text-3xl font-bold text-gray-900">So einfach geht's</h2>
+          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { icon: Star,         title: 'Anbieter vergleichen', text: 'Finden Sie den günstigsten Parkplatz an Ihrem Flughafen.' },
+              { icon: ShieldCheck,  title: 'Sicher buchen',        text: 'SSL-verschlüsselt, flexible Stornierung bis 24 h vorher.' },
+              { icon: Truck,        title: 'Shuttle oder Valet',   text: 'Wählen Sie zwischen bequemem Shuttle oder persönlichem Valet-Service.' },
+              { icon: Clock,        title: '24/7 Support',         text: 'Unser Team ist rund um die Uhr für Sie erreichbar.' },
+            ].map(({ icon: Icon, title, text }) => (
+              <div key={title} className="flex flex-col items-center text-center">
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-brand-100">
+                  <Icon className="h-7 w-7 text-brand-600" />
+                </div>
+                <h3 className="mt-4 text-base font-semibold text-gray-900">{title}</h3>
+                <p className="mt-2 text-sm text-gray-500">{text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* B2B CTA */}
+      <section className="bg-gray-900 py-16 text-white">
+        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold">Sie sind Parkplatzbetreiber?</h2>
+          <p className="mt-3 text-gray-400">
+            Verwalten Sie Buchungen, Fahrer und Rechnungen in einem modernen Dashboard.
+          </p>
+          <a
+            href="/auth/operator-login"
+            className="mt-6 inline-block rounded-lg bg-brand-600 px-6 py-3 font-semibold hover:bg-brand-700"
+          >
+            Zum Betreiber-Login →
+          </a>
+        </div>
+      </section>
+    </>
+  )
+}
