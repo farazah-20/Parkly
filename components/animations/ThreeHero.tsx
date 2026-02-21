@@ -270,8 +270,12 @@ export function ThreeHero() {
     const blueAccent = new THREE.PointLight(0x3b82f6, 12, 22)
     blueAccent.position.set(-9, 7, -4)
     scene.add(blueAccent)
-    scene.add(Object.assign(new THREE.PointLight(0xfbbf24, 5, 14), { position: new THREE.Vector3(10, 4, 7) }))
-    scene.add(Object.assign(new THREE.PointLight(0x6366f1, 6, 18), { position: new THREE.Vector3(4, 8, -8) }))
+    const warmAccent = new THREE.PointLight(0xfbbf24, 5, 14)
+    warmAccent.position.set(10, 4, 7)
+    scene.add(warmAccent)
+    const purpleAccent = new THREE.PointLight(0x6366f1, 6, 18)
+    purpleAccent.position.set(4, 8, -8)
+    scene.add(purpleAccent)
 
     // ── Animation loop ────────────────────────────────────────────────────────
     let tick = 0
